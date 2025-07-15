@@ -1,9 +1,10 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
 import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from '../../services/store';
 import {
   selectConstructorBun,
-  selectConstructorIngredients
+  selectConstructorIngredients,
+  clearConstructor
 } from '../../services/slices/burgerConstructorSlice';
 import { selectUser } from '../../services/slices/userAuthorizedSlice';
 import {
@@ -26,6 +27,10 @@ export const BurgerConstructor: FC = () => {
   const user = useSelector(selectUser);
   const orderRequest = useSelector(selectOrderLoading);
   const orderModalData = useSelector(selectOrderData);
+
+  useEffect(() => {
+    dispatch(clearOrderError());
+  }, [dispatch]);
 
   const constructorItems = useMemo(
     () => ({
@@ -56,7 +61,12 @@ export const BurgerConstructor: FC = () => {
       bun._id
     ];
 
-    dispatch(createOrder(ingredientsIds));
+    dispatch(createOrder(ingredientsIds))
+      .unwrap()
+      .then(() => {
+        dispatch(clearConstructor());
+      })
+      .catch(() => {});
   };
 
   return (

@@ -49,7 +49,8 @@ const constructorSlice = createSlice({
       const { fromIndex, toIndex } = action.payload;
       const [removed] = state.ingredients.splice(fromIndex, 1);
       state.ingredients.splice(toIndex, 0, removed);
-    }
+    },
+    clearConstructor: () => initialState
   },
   selectors: {
     selectConstructor: (state) => state,
@@ -58,8 +59,12 @@ const constructorSlice = createSlice({
   }
 });
 
-export const { addIngredient, removeIngredient, moveIngredient } =
-  constructorSlice.actions;
+export const {
+  addIngredient,
+  removeIngredient,
+  moveIngredient,
+  clearConstructor
+} = constructorSlice.actions;
 
 export const {
   selectConstructor,
