@@ -28,13 +28,13 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
     return <Preloader />;
   }
 
+  if (!onlyUnAuth && !isAuth) {
+    return <Navigate to='/login' state={{ from: location }} replace />;
+  }
+
   if (onlyUnAuth && isAuth) {
     const from = location.state?.from?.pathname || '/';
     return <Navigate to={from} replace />;
-  }
-
-  if (!onlyUnAuth && !isAuth) {
-    return <Navigate to='/login' state={{ from: location }} replace />;
   }
 
   return children;

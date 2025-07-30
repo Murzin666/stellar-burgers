@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "643d69a5c3f7b9001cfa093c",
+      "name": "Краторная булка N-200i",
+      "type": "bun",
+      "price": 1255,
+      "image": "https://code.s3.yandex.net/react/code/bun-02.png"
+    },
+    {
+      "_id": "1234",
+      "name": "Фуагра",
+      "type": "main",
+      "price": 777,
+      "image": "https://code.s3.yandex.net/react/code/meat-04.png"
+    }
+  ]
+}
