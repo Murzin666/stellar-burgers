@@ -20,6 +20,7 @@ export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
   const handleCloseOrderModal = () => {
     dispatch(clearOrderError());
+    dispatch(clearConstructor());
   };
 
   const bun = useSelector(selectConstructorBun);

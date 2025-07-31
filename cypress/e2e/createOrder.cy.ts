@@ -20,8 +20,27 @@ describe('Создание заказа', () => {
   });
 
   it('Должен открывать модальное окно с деталями ингредиента', () => {
-    cy.get('[data-testid^="ingredient-"]').first().click();
-    cy.get('[data-testid="ingredient-details"]').should('exist');
+    cy.get('[data-testid^="ingredient-"]').first().as('selectedIngredient');
+
+    cy.get('@selectedIngredient').within(() => {
+      cy.get('[data-testid="ingredient-name"]')
+        .invoke('text')
+        .as('ingredientName');
+
+      cy.get('[data-testid="ingredient-link"]').click();
+    });
+
+    cy.get('[data-testid="modal"]')
+      .should('exist')
+      .within(() => {
+        cy.get('@ingredientName').then((name) => {
+          cy.get('[data-testid="ingredient-details-name"]').should(
+            'have.text',
+            name
+          );
+        });
+      });
+
     cy.get('[data-testid="modal-close-button"]').click();
     cy.get('[data-testid="ingredient-details"]').should('not.exist');
   });
@@ -64,6 +83,9 @@ describe('Создание заказа', () => {
     cy.get('[data-testid="order-modal"]').should('exist').and('be.visible');
 
     cy.get('[data-testid="order-number"]').should('contain', '85340');
+
+    cy.get('[data-testid="div._W_JfNJJl5H5e8eqr8Ya"]').should('not.exist');
+    cy.get('[data-testid="ul.HEJ0tV35JHL7iuHL89vk"]').should('not.exist');
   });
 
   it('Должен перенаправлять на логин при попытке создать заказ без авторизации', () => {

@@ -15,8 +15,15 @@ describe('Конструктор бургера', () => {
     cy.wait(['@getIngredients', '@getUser']);
   });
 
+  afterEach(() => {
+    cy.clearAllCookies();
+    cy.clearAllLocalStorage();
+  });
+
   it('Должен добавлять булку в конструктор', () => {
-    cy.get('[data-testid^="ingredient-"]').should('have.length.at.least', 2);
+    cy.get('[data-testid="constructor-bun-top"]').should('not.exist');
+    cy.get('[data-testid="constructor-bun-bottom"]').should('not.exist');
+    cy.get('[data-testid="constructor-ingredients"]').should('not.exist');
 
     cy.get('[data-testid="ingredient-bun"]')
       .first()
